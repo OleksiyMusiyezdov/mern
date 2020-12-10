@@ -28,7 +28,7 @@ app.get('/api', (req, res) => {
     db.db().collection('notes').find().toArray((err, notes) => {
         if (err) throw err;
 
-        res.send({ notes: notes });
+        res.send({ notes });
     });
 });
 
@@ -40,7 +40,7 @@ app.post('/api/createNote', (req, res) => {
     db.db().collection('notes').insertOne(note, (err, result) => {
         if (err) throw err;
         
-        res.send({ result: result });
+        res.send({ result });
     });
 });
 

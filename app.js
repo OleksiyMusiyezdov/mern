@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const app = express();
 
-const PORT = config.get('port') || 8080;
+const PORT = config.get('port');
 
 app.use(
     cors(),

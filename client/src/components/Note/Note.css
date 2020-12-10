@@ -1,0 +1,16 @@
+.Note {
+    height: 100%;
+    width: 100%;
+    margin: 20px;
+    padding: 15px;
+}
+
+.row {
+    display: flex;
+}
+
+.picture {
+    height: 200px;
+    width: 200px;
+    margin: 30px 30px 0px 30px;
+}

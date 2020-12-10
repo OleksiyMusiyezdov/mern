@@ -1,0 +1,11 @@
+.Container {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    
+  }
+
+  .column {
+    margin-top: 20px;
+  }

@@ -14,9 +14,11 @@ export const CreateNote = () => {
         setForm({ ...form, [event.target.name]: event.target.value });
     }
 
-    const registerHandler = async () => {
+    const registerHandler = async (e) => {
+        e.preventDefault();
 
         console.log({ ...form });
+
         try {
             const url = 'http://localhost:8080/api/createNote';
             const options = {

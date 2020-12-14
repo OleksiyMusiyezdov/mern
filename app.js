@@ -22,14 +22,30 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (e
     app.listen(PORT, '127.0.0.1', console.log(`Web-server is started on ${PORT}.`));
 });
 
-
-/* Read */
-app.get('/api', (req, res) => {
+const find = (req, res, next) => {
     db.db().collection('notes').find().toArray((err, notes) => {
         if (err) throw err;
 
         res.send({ notes });
     });
+    next();
+};
+app.use("/api", find);
+
+/* Read */
+app.get('/api', (req, res, next) => {
+
+    /*
+    It works properly (with "find" as a middleware) but gives "GET http://localhost:3000/undefined" into browser console
+    I assume that it is because there are no some pictures in the database (which should be found somewhere in outer place via the link)
+
+    But! This changes behavior of app.post('/api/createNote'...
+    The block of "res.send({ result });" invokes the error (in the server console):
+    "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client"
+    This error vanishes if "res.send({ result });" is commented (see string 58 in this file)
+
+    **/
+
 });
 
 app.post('/api/createNote', (req, res) => {
@@ -39,8 +55,8 @@ app.post('/api/createNote', (req, res) => {
 
     db.db().collection('notes').insertOne(note, (err, result) => {
         if (err) throw err;
-        
-        res.send({ result });
+
+        //res.send({ result });
     });
 });
 

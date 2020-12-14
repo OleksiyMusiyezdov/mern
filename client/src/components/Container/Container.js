@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Container.css';
 import Note from '../Note/Note';
 import 'materialize-css';
-import notes from "../../content/notes.json";
+//import notes from "../../content/notes.json";
 
 class Container extends Component {
 
@@ -22,15 +22,15 @@ class Container extends Component {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json;charset=UTF-8',
                     },
-                    // body: JSON.stringify({ ...form })
                 };
 
-                await fetch(url, options)
-                    .then(response => {
-                        console.log(response.status);
-                        //this.setState({ notes: response });
-                        //console.log(this.state.notes);
+                let data = await fetch(url, options)
+                    .then((response) => {
+                        return response.json();
                     });
+                //console.log(data.notes);
+                this.setState({ notes: data.notes });
+                //console.log(this.state.notes);
 
             } catch (e) { console.log(e); }
         };
@@ -44,16 +44,16 @@ class Container extends Component {
             <div className="column">
                 <a href="/createNote"><button className="btn">Create new note</button></a>
                 <div className="NotesContainer">
-                    {notes.map((note, key) => {
-                        // {this.state.notes.map((note, key) => {
+                    {/* {notes.map((note, key) => { */}
+                    {this.state.notes.map((note, key) => {
                         return (<li key={key}>
                             <Note
+                                // title={note.title}
+                                // content={note.content}
+                                // picture={note.picture}
                                 title={note.title}
                                 content={note.content}
                                 picture={note.picture}
-                            // title={this.state.title}
-                            // content={this.state.content}
-                            // picture={this.state.picture}
                             />
                         </li>)
                     })}

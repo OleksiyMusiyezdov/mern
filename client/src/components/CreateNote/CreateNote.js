@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { Redirect } from "react-router-dom";
+
 import './CreateNote.css';
 import 'materialize-css';
-//import { useHTTP } from '../../hooks/http.hook';
 
 export const CreateNote = () => {
 
-    //const { loading, request, error, clearError } = useHTTP();
     const [form, setForm] = useState({
         title: '', content: ''
     });
@@ -30,26 +30,13 @@ export const CreateNote = () => {
                 body: JSON.stringify({ ...form })
             };
 
-            const data = await fetch(url, options);
+            const data = await fetch(url, options)
+            //.then(<Redirect to={"/"} />); // It doesn'n work - I don't know why...
+
             console.log(data);
-            // .then(response => {
-            //     console.log("My response:", response.status);
-            // });
 
         } catch (e) { console.log(e); }
     };
-
-    // const registerHandler2 = async () => {
-    //     console.log({ ...form });
-    //     try {
-    //         const data = await request('http://localhost:8080/api/createNote', 'POST', { ...form })
-    //             .then(response => {
-    //                 console.log("My response:", response.status);
-    //             });
-    //         console.log(data);
-    //         //(data.message)
-    //     } catch (e) { }
-    // }
 
     return (
         <form className="CreateNote">

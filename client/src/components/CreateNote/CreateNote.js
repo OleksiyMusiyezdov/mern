@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import './CreateNote.css';
 import 'materialize-css';
 
 export const CreateNote = () => {
+    const history = useHistory();
 
     const [form, setForm] = useState({
         title: '', content: ''
@@ -30,8 +31,9 @@ export const CreateNote = () => {
                 body: JSON.stringify({ ...form })
             };
 
-            const data = await fetch(url, options)
-            //.then(<Redirect to={"/"} />); // It doesn'n work - I don't know why...
+            const data = await fetch(url, options);
+
+            history.push('/');
 
             console.log(data);
 

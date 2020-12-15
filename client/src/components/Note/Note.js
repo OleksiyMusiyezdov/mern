@@ -23,7 +23,7 @@ class Note extends Component {
                 </div>
 
                 <div className="picture"
-                    style={{ backgroundImage: `url(${this.state.picture})` }}>
+                    style={ this.state.picture && { backgroundImage: `url(${this.state.picture})` }}>
                 </div>
             </div>
             {/* <div class="card-action">

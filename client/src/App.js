@@ -14,7 +14,6 @@ class App extends Component {
         <Switch>
           <Route path="/" exact><Container /></Route>
           <Route path="/createNote" exact><CreateNote /></Route>
-          {/* <Redirect to="/" ></Redirect> */}
           <Route><NotFound /></Route>
         </Switch>
       </Router >

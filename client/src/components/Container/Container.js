@@ -30,7 +30,7 @@ class Container extends Component {
                     });
                 this.setState({ notes: data.notes });
 
-            } catch (e) { console.log(e); }
+            } catch (e) { console.log("Failed to get notes from database ", e); }
         };
 
         registerHandler();
@@ -40,9 +40,11 @@ class Container extends Component {
         return <div className="Container" >
             <div className="column">
 
-                <div className="EmptyNotes">
-                    <h6>There are {this.state.notes.length} notes in the list. Would you like to add a note?</h6><br />
-                </div>
+                {this.state.notes.length === 0 &&
+                    <div className="EmptyNotes">
+                        <h6>There are {this.state.notes.length} notes in the list. Would you like to add a note?</h6><br />
+                    </div>
+                }
 
                 <Link to="/createNote"><button className="btn">Create new note</button></Link>
 

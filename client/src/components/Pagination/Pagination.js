@@ -1,7 +1,7 @@
 import React from 'react';
 import Note from '../Note/Note';
 
-export const NotesContainer = (notes) => {
+export const Pagination = (notes) => {
 
     return (
         <div className="NotesContainer">

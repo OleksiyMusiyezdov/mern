@@ -37,7 +37,7 @@ export const CreateNote = () => {
 
             console.log(data);
 
-        } catch (e) { console.log(e); }
+        } catch (e) { console.log("Failed to add a note: ", e); }
     };
 
     return (

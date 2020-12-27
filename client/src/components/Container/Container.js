@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './Container.css';
-import Note from '../Note/Note';
+import { NotesContainer } from '../NotesContainer/NotesContainer';
 import 'materialize-css';
-//import notes from "../../content/notes.json";
 
 class Container extends Component {
 
@@ -29,42 +28,29 @@ class Container extends Component {
                     .then((response) => {
                         return response.json();
                     });
-                //console.log(data.notes);
                 this.setState({ notes: data.notes });
-                //console.log(this.state.notes);
 
             } catch (e) { console.log(e); }
         };
 
         registerHandler();
-
     }
 
     render() {
         return <div className="Container" >
             <div className="column">
-                {/* <a href="/createNote"><button className="btn">Create new note</button></a> */}
-                <Link to="/createNote"><button className="btn">Create new note</button></Link>
-                <div className="NotesContainer">
-                    {/* {notes.map((note, key) => { */}
-                    {this.state.notes.map((note, key) => {
-                        return (<li key={key}>
-                            <Note
-                                // title={note.title}
-                                // content={note.content}
-                                // picture={note.picture}
-                                title={note.title}
-                                content={note.content}
-                                picture={note.picture}
-                            />
-                        </li>)
-                    })}
+
+                <div className="EmptyNotes">
+                    <h6>There are {this.state.notes.length} notes in the list. Would you like to add a note?</h6><br />
                 </div>
+
+                <Link to="/createNote"><button className="btn">Create new note</button></Link>
+
+                {this.state.notes.length !== 0 && <NotesContainer notes={this.state.notes} />}
 
             </div>
         </div>;
     }
 }
-
 
 export default Container;

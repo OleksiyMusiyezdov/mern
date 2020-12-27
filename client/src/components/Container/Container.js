@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './Container.css';
 import Note from '../Note/Note';
 import 'materialize-css';
@@ -42,7 +43,8 @@ class Container extends Component {
     render() {
         return <div className="Container" >
             <div className="column">
-                <a href="/createNote"><button className="btn">Create new note</button></a>
+                {/* <a href="/createNote"><button className="btn">Create new note</button></a> */}
+                <Link to="/createNote"><button className="btn">Create new note</button></Link>
                 <div className="NotesContainer">
                     {/* {notes.map((note, key) => { */}
                     {this.state.notes.map((note, key) => {

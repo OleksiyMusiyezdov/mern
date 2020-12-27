@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 import './CreateNote.css';
 import 'materialize-css';
@@ -67,7 +67,7 @@ export const CreateNote = () => {
                 />
             </div>
             <input type="submit" value="Submit" onClick={registerHandler} />
-            <a href="/"><button type="button" value="Home">Home</button></a>
+            <Link to="/"><button type="button" value="Home">Home</button></Link>
         </form>
     )
 }

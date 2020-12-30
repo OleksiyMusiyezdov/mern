@@ -27,13 +27,38 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (e
     app.listen(PORT, '127.0.0.1', console.log(`Web-server is started on ${PORT}.`));
 });
 
-const find = (req, res, next) => {
-    db.db().collection('notes').find().toArray((err, notes) => {
+const total = async (req, res, next) => {
+    try {
+        console.log('totalCount111');
+        let totalCount = await db.db().collection('notes').countDocuments();
+        console.log("Total: ", totalCount);
+        return { totalCount: totalCount };
+    } catch (e) {
+        console.log('Unable to get total number of notes ', e);
+    };
+};
+
+const find = async (req, res, next) => {
+
+    let page = parseInt(req.query.page);
+    let pageSize = parseInt(req.query.pageSize);
+    //let totalCount
+    // let totalCountFound = total()
+    //     .then((response) => {
+    //         console.log("response: ", response);
+    //         return { totalCount: response.totalCount };
+    //     });
+    let totalCount = await db.db().collection('notes').countDocuments();
+    console.log("TotalCountFound: ", totalCount);
+
+    db.db().collection('notes').find().skip((page - 1) * pageSize).limit(pageSize).toArray((err, notes) => {
+
         if (err) {
             console.log('Unable to get data from database');
             throw err;
         }
-        res.send({ notes });
+        //console.log("TotalCountFound: ", totalCount);
+        res.send({ totalCount, notes });
     });
     next();
 };

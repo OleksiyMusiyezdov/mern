@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { CreateNote } from './components/CreateNote/CreateNote';
 import Container from './components/Container/Container';
@@ -9,10 +9,11 @@ import './App.css';
 class App extends Component {
 
   render() {
+
     return <div className="App" >
       <Router>
         <Switch>
-          <Route path="/" exact><Container /></Route>
+          <Route path="/" exact ><Container /></Route>
           <Route path="/createNote" exact><CreateNote /></Route>
           <Route><NotFound /></Route>
         </Switch>

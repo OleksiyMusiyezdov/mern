@@ -7,7 +7,7 @@ export const NotesContainer = (notes) => {
         <div className="NotesContainer">
 
             {notes.notes.map((note, key) => {
-                return (<li key={key}>
+                return (<li key={note._id}>
                     <Note
                         title={note.title}
                         content={note.content}

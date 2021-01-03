@@ -20,15 +20,19 @@ class Container extends Component {
         this.registerHandler = this.registerHandler.bind(this);
     }
 
-    setCurrentPage = async (event) => {
-        try {
-            console.log("Page before change: ", this.state.currentPage);
-            console.log("Page clicked: ", event.currentTarget.textContent);
-            await this.setState({ currentPage: event.currentTarget.textContent });
-            console.log("Updated current page: ", this.state.currentPage);
-            this.registerHandler();
-        } catch (e) { console.log("Failed to get page until it is set ", e); }
-    }
+    // setCurrentPage = async (event) => {
+    //     try {
+    //         console.log("Page before change: ", this.state.currentPage);
+    //         console.log("Page clicked: ", event.currentTarget.textContent);
+    //         await this.setState({ currentPage: event.currentTarget.textContent });
+    //         console.log("Updated current page: ", this.state.currentPage);
+    //         this.registerHandler();
+    //     } catch (e) { console.log("Failed to get page until it is set ", e); }
+    // }
+
+    setCurrentPage = p => e => this.setState({ currentPage: p }, this.registerHandler);
+
+
 
     registerHandler = async () => {
 
@@ -51,7 +55,7 @@ class Container extends Component {
             this.setState({ pagesCount: Math.ceil(data.totalCount / this.state.pageSize) });
 
             // console.log(data.totalCount);
-            // console.log(data.notes);
+            console.log(data.notes);
             // console.log(this.state.pagesCount);
 
             let pagesOfCount = [];
@@ -65,7 +69,6 @@ class Container extends Component {
 
     componentDidMount() {
         this.registerHandler();
-        //console.log("componentDidMount: ", this.state.currentPage);
     }
 
     render() {
@@ -84,10 +87,9 @@ class Container extends Component {
                 <div className={styles.pages}>
                     {this.state.pages.map((p, key) => {
                         return <span
-                            className={this.state.currentPage === p ? styles.selectedPage : ''}
+                            className={+this.state.currentPage === p ? styles.selectedPage : ''}
                             key={key}
-                            value={p}
-                            onClick={this.setCurrentPage}> {p} </span>
+                            onClick={this.setCurrentPage(p)}>{p}</span>
                     })}
                 </div>
 

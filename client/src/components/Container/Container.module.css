@@ -10,6 +10,10 @@
     margin-top: 20px;
   }
 
+  .pages {
+    font-size: 18px;
+  }
+
   .selectedPage {
     font-weight: bold;
     font-size: 18px;

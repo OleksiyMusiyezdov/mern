@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 //import './Container.css';
-import styles from './Container.css';
+import styles from './Container.module.css';
 import { NotesContainer } from '../NotesContainer/NotesContainer';
 import 'materialize-css';
 
@@ -22,9 +22,10 @@ class Container extends Component {
 
     setCurrentPage = async (event) => {
         try {
-            console.log(event.currentTarget.textContent);
+            console.log("Page before change: ", this.state.currentPage);
+            console.log("Page clicked: ", event.currentTarget.textContent);
             await this.setState({ currentPage: event.currentTarget.textContent });
-            console.log("componentDidUpdate: ", this.state.currentPage);
+            console.log("Updated current page: ", this.state.currentPage);
             this.registerHandler();
         } catch (e) { console.log("Failed to get page until it is set ", e); }
     }
@@ -49,9 +50,9 @@ class Container extends Component {
             this.setState({ notes: data.notes });
             this.setState({ pagesCount: Math.ceil(data.totalCount / this.state.pageSize) });
 
-            console.log(data.totalCount);
-            console.log(data.notes);
-            console.log(this.state.pagesCount);
+            // console.log(data.totalCount);
+            // console.log(data.notes);
+            // console.log(this.state.pagesCount);
 
             let pagesOfCount = [];
             for (let i = 1; i <= this.state.pagesCount; i++) {
@@ -64,10 +65,11 @@ class Container extends Component {
 
     componentDidMount() {
         this.registerHandler();
-        console.log("componentDidMount: ", this.state.currentPage);
+        //console.log("componentDidMount: ", this.state.currentPage);
     }
 
     render() {
+
         return <div className="Container" >
             <div className="column">
 
@@ -79,10 +81,10 @@ class Container extends Component {
 
                 <Link to="/createNote"><button className="btn">Create new note</button></Link>
 
-                <div className="Pages">
+                <div className={styles.pages}>
                     {this.state.pages.map((p, key) => {
                         return <span
-                            className={toString(this.state.currentPage === 1 ? styles.selectedPage : {})}
+                            className={this.state.currentPage === p ? styles.selectedPage : ''}
                             key={key}
                             value={p}
                             onClick={this.setCurrentPage}> {p} </span>

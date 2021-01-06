@@ -1,6 +1,7 @@
 const config = require('config');
 const express = require('express');
 const cors = require('cors');
+const connect = require('./dbConnection');
 
 const createNoteValidation = require('./createNoteValidator');
 
@@ -26,8 +27,39 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (e
     db = client;
     app.listen(PORT, '127.0.0.1', console.log(`Web-server is started on ${PORT}.`));
 });
+//const db = connect();
+
+app.post('/api/createNote', (req, res) => {
+    if (!req.body) return res.sendStatus(400);
+
+    const note = req.body;
+
+
+    // Validation
+    let validationResponse = createNoteValidation(note);
+
+    if (validationResponse.status === false) {
+
+        console.log(validationResponse.message);
+
+        /* How to sent message to frontend?
+        return res.send(errorMessage); (or something like that)
+        returns "Cannot set headers after they are sent to the client"
+        **/
+    } else {
+        db.db().collection('notes').insertOne(note, (err, result) => {
+            if (err) {
+                console.log('Unable to insert the note to the database');
+                throw err;
+            }
+            //res.send({ result });
+        })
+    };
+});
 
 const find = async (req, res, next) => {
+
+    console.log("In the find");
 
     let page = parseInt(req.query.page);
     let pageSize = parseInt(req.query.pageSize);
@@ -50,6 +82,9 @@ app.use("/api", find);
 /* Read */
 app.get('/api', (req, res, next) => {
 
+    console.log("In the get");
+    //find(req, res);
+
     /*
     It works properly (with "find" as a middleware) but gives "GET http://localhost:3000/undefined" into browser console
     I assume that it is because there are no some pictures in the database (which should be found somewhere in outer place via the link)
@@ -63,28 +98,4 @@ app.get('/api', (req, res, next) => {
 
 });
 
-app.post('/api/createNote', (req, res) => {
-    if (!req.body) return res.sendStatus(400);
-
-    const note = req.body;
-
-    // Validation
-    if (createNoteValidation(note).status === false) {
-        let errorMessage = createNoteValidation(note).message;
-        console.log(errorMessage);
-
-        /* How to sent message to frontend?
-        return res.send(errorMessage); (or something like that)
-        returns "Cannot set headers after they are sent to the client"
-        **/
-    };
-
-    db.db().collection('notes').insertOne(note, (err, result) => {
-        if (err) {
-            console.log('Unable to insert the note to the database');
-            throw err;
-        }
-        //res.send({ result });
-    });
-});
 

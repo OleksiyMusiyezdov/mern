@@ -32,8 +32,6 @@ class Container extends Component {
 
     setCurrentPage = p => e => this.setState({ currentPage: p }, this.registerHandler);
 
-
-
     registerHandler = async () => {
 
         try {
@@ -87,7 +85,7 @@ class Container extends Component {
                 <div className={styles.pages}>
                     {this.state.pages.map((p, key) => {
                         return <span
-                            className={+this.state.currentPage === p ? styles.selectedPage : ''}
+                            className={parseInt(this.state.currentPage) === p ? styles.selectedPage : ''}
                             key={key}
                             onClick={this.setCurrentPage(p)}>{p}</span>
                     })}

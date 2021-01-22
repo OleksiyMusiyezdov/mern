@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { CreateNote } from './components/CreateNote/CreateNote';
+//import { CreateNote } from './components/CreateNote/CreateNote';
+import { CreateNoteContainer } from './components/CreateNote/CreateNoteContainer';
+
 import Container from './components/Container/Container';
 import { NotFound } from './components/NotFound/NotFound';
 import './App.css';
@@ -25,7 +27,7 @@ class App extends Component {
             changeNoteContent={changeNoteContent}
             addNote={addNote} /></Route> */}
           <Route path="/" exact ><Container notes={store.getState().notes} /></Route>
-          <Route path="/createNote" exact><CreateNote
+          <Route path="/createNote" exact><CreateNoteContainer
             state={store.getState().newNote}
             dispatch={store.dispatch.bind(store)}
 

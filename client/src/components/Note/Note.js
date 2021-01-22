@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Note.css';
-import 'materialize-css';
+//import 'materialize-css';
 
 class Note extends Component {
 
@@ -22,9 +22,9 @@ class Note extends Component {
                     <p>{this.state.content}</p>
                 </div>
 
-                <div className="picture"
-                    style={ this.state.picture && { backgroundImage: `url(${this.state.picture})` }}>
-                </div>
+                {/* <div className="picture"
+                    style={this.state.picture && { backgroundImage: `url(${this.state.picture})` }}>
+                </div> */}
             </div>
             {/* <div class="card-action">
                 <a href="#">This is a link</a>

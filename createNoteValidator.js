@@ -5,7 +5,7 @@ module.exports = function createNoteValidation(note) {
     let content = note.content;
     let response = {
         status: true,
-        message: "",
+        message: "Everything's OK!",
     };
 
     if (!title) {

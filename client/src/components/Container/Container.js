@@ -3,14 +3,18 @@ import { Link } from 'react-router-dom';
 //import './Container.css';
 import styles from './Container.module.css';
 import { NotesContainer } from '../NotesContainer/NotesContainer';
-import 'materialize-css';
+// import 'materialize-css';
 
 class Container extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
+
             notes: [],
+            // Redux-style:
+            notes: this.props.notes,
+
             currentPage: 1,
             pageSize: 5,
             pagesCount: 0,
@@ -52,9 +56,7 @@ class Container extends Component {
             this.setState({ notes: data.notes });
             this.setState({ pagesCount: Math.ceil(data.totalCount / this.state.pageSize) });
 
-            // console.log(data.totalCount);
             console.log(data.notes);
-            // console.log(this.state.pagesCount);
 
             let pagesOfCount = [];
             for (let i = 1; i <= this.state.pagesCount; i++) {
@@ -66,7 +68,7 @@ class Container extends Component {
     };
 
     componentDidMount() {
-        this.registerHandler();
+        //this.registerHandler();
     }
 
     render() {
@@ -74,11 +76,11 @@ class Container extends Component {
         return <div className="Container" >
             <div className="column">
 
-                {this.state.notes.length === 0 &&
+                {/* {this.state.notes.length === 0 &&
                     <div className="EmptyNotes">
                         <h6>There are {this.state.notes.length} notes in the list. Would you like to add a note?</h6><br />
                     </div>
-                }
+                } */}
 
                 <Link to="/createNote"><button className="btn">Create new note</button></Link>
 

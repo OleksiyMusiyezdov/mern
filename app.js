@@ -34,27 +34,22 @@ app.post('/api/createNote', (req, res) => {
 
     const note = req.body;
 
-
     // Validation
     let validationResponse = createNoteValidation(note);
 
     if (validationResponse.status === false) {
 
-        console.log(validationResponse.message);
-
-        /* How to sent message to frontend?
-        return res.send(errorMessage); (or something like that)
-        returns "Cannot set headers after they are sent to the client"
-        **/
     } else {
         db.db().collection('notes').insertOne(note, (err, result) => {
+
             if (err) {
                 console.log('Unable to insert the note to the database');
                 throw err;
             }
-            //res.send({ result });
         })
     };
+    console.log(validationResponse.message);
+    return res.status(200).send(validationResponse.message);
 });
 
 const find = async (req, res, next) => {
@@ -67,14 +62,13 @@ const find = async (req, res, next) => {
     console.log("TotalCountFound: ", totalCount);
     console.log("CurrentPage: ", page);
 
-    db.db().collection('notes').find().skip((page - 1) * pageSize).limit(pageSize).toArray((err, notes) => {
-
-        if (err) {
-            console.log('Unable to get data from database');
-            throw err;
-        }
-        res.send({ totalCount, notes });
-    });
+    let notes;
+    try {
+        notes = await db.db().collection('notes').find().skip((page - 1) * pageSize).limit(pageSize).toArray();
+    } catch (e) {
+        console.log('Unable to get data from database');
+    }
+    res.send({ totalCount, notes });
     next();
 };
 app.use("/api", find);

@@ -52,10 +52,10 @@ app.post('/api/createNote', (req, res) => {
     return res.status(200).send(validationResponse.message);
 });
 
-const find = async (req, res, next) => {
+/* Read */
+app.get('/api', async (req, res) => {
 
-    console.log("In the find");
-
+    console.log("In the get");
     let page = parseInt(req.query.page);
     let pageSize = parseInt(req.query.pageSize);
     let totalCount = await db.db().collection('notes').countDocuments();
@@ -69,27 +69,6 @@ const find = async (req, res, next) => {
         console.log('Unable to get data from database');
     }
     res.send({ totalCount, notes });
-    next();
-};
-app.use("/api", find);
-
-/* Read */
-app.get('/api', (req, res, next) => {
-
-    console.log("In the get");
-    //find(req, res);
-
-    /*
-    It works properly (with "find" as a middleware) but gives "GET http://localhost:3000/undefined" into browser console
-    I assume that it is because there are no some pictures in the database (which should be found somewhere in outer place via the link)
-
-    But! This changes behavior of app.post('/api/createNote'...
-    The block of "res.send({ result });" invokes the error (in the server console):
-    "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client"
-    This error vanishes if "res.send({ result });" is commented (see string 58 in this file)
-
-    **/
-
 });
 
 

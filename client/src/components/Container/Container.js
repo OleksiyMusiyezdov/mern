@@ -13,7 +13,7 @@ class Container extends Component {
 
             notes: [],
             // Redux-style:
-            notes: this.props.notes,
+            // notes: this.props.notes,
 
             currentPage: 1,
             pageSize: 5,
@@ -68,7 +68,7 @@ class Container extends Component {
     };
 
     componentDidMount() {
-        //this.registerHandler();
+        this.registerHandler();
     }
 
     render() {

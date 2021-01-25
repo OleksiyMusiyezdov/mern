@@ -2,7 +2,7 @@ import React from 'react';
 import Note from '../Note/Note';
 
 export const NotesContainer = (notes) => {
-
+    console.log(notes);
     return (
         <div className="NotesContainer">
 
